@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -7,40 +7,50 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-900 text-white min-h-screen p-6">
-  <h1 class="text-3xl font-bold mb-6">📂 My Web Projects</h1>
+  <div class="flex items-center space-x-4 mb-6">
+  <img src="./logo.png" alt="Logo" class="w-10 h-10" />
+  <h1 class="text-3xl font-bold">My Tiles</h1>
+</div>
 
-  <div
-    id="dashboard"
-    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-  >
-    <!-- Tiles will be injected here -->
+
+  <div id="dashboard" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- Tiles get injected here -->
   </div>
 
   <!-- Floating + Button -->
-  <button
-    id="addTileBtn"
-    class="fixed bottom-6 right-6 bg-blue-600 hover:bg-blue-700 text-white text-3xl w-14 h-14 rounded-full shadow-lg z-50"
-    title="Add Tile"
-  >
+  <button id="addTileBtn" class="fixed bottom-6 right-6 bg-blue-600 hover:bg-blue-700 text-white text-3xl w-14 h-14 rounded-full shadow-lg z-50" title="Add Tile">
     +
   </button>
 
   <!-- Tile Picker Modal -->
-  <div
-    id="tilePicker"
-    class="hidden fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex justify-center items-center z-40"
-  >
+  <div id="tilePicker" class="hidden fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex justify-center items-center z-40">
     <div class="bg-gray-800 p-6 rounded-xl w-80">
       <h2 class="text-xl font-bold mb-4">Add a Tile</h2>
       <div id="tileList" class="space-y-3">
-        <!-- Populated via JS -->
+        <!-- Populated by JS -->
       </div>
-      <button
-        id="closePicker"
-        class="mt-4 w-full bg-gray-700 hover:bg-gray-600 p-2 rounded"
-      >
+      <button id="closePicker" class="mt-4 w-full bg-gray-700 hover:bg-gray-600 p-2 rounded">
         Close
       </button>
+    </div>
+  </div>
+
+  <!-- Add Custom Tile Modal -->
+  <div id="addCustomTileModal" class="hidden fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex justify-center items-center z-50">
+    <div class="bg-gray-800 p-6 rounded-xl w-96">
+      <h2 class="text-xl font-bold mb-4">Add Custom Tile</h2>
+      <label class="block mb-2">
+        <span class="text-gray-300">Tile Name:</span>
+        <input id="customTileNameInput" type="text" class="mt-1 block w-full rounded border border-gray-600 bg-gray-900 text-white p-2" />
+      </label>
+      <label class="block mb-4">
+        <span class="text-gray-300">Iframe URL:</span>
+        <input id="customTileUrlInput" type="text" class="mt-1 block w-full rounded border border-gray-600 bg-gray-900 text-white p-2" />
+      </label>
+      <div class="flex justify-end space-x-3">
+        <button id="cancelAddCustomTileBtn" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded">Cancel</button>
+        <button id="saveAddCustomTileBtn" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded">Add Tile</button>
+      </div>
     </div>
   </div>
 
@@ -48,13 +58,20 @@
   <div id="settingsModal" class="hidden fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex justify-center items-center z-50">
     <div class="bg-gray-800 p-6 rounded-xl w-96">
       <h2 class="text-xl font-bold mb-4">Tile Settings</h2>
+
+      <!-- Only show name input for custom tiles -->
+      <label id="settingsNameLabel" class="block mb-2 hidden">
+        <span class="text-gray-300">Tile Name:</span>
+        <input id="settingsNameInput" type="text" class="mt-1 block w-full rounded border border-gray-600 bg-gray-900 text-white p-2" />
+      </label>
+
       <label class="block mb-2">
         <span class="text-gray-300">Iframe URL:</span>
         <input id="settingsUrlInput" type="text" class="mt-1 block w-full rounded border border-gray-600 bg-gray-900 text-white p-2" />
       </label>
       <div class="flex justify-end space-x-3 mt-4">
         <button id="cancelSettingsBtn" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded">Cancel</button>
-        <button id="saveSettingsBtn" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded text-white">Save</button>
+        <button id="saveSettingsBtn" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded">Save</button>
       </div>
     </div>
   </div>

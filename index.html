@@ -20,6 +20,7 @@
   <button
     id="addTileBtn"
     class="fixed bottom-6 right-6 bg-blue-600 hover:bg-blue-700 text-white text-3xl w-14 h-14 rounded-full shadow-lg z-50"
+    title="Add Tile"
   >
     +
   </button>
@@ -40,6 +41,21 @@
       >
         Close
       </button>
+    </div>
+  </div>
+
+  <!-- Settings Modal -->
+  <div id="settingsModal" class="hidden fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex justify-center items-center z-50">
+    <div class="bg-gray-800 p-6 rounded-xl w-96">
+      <h2 class="text-xl font-bold mb-4">Tile Settings</h2>
+      <label class="block mb-2">
+        <span class="text-gray-300">Iframe URL:</span>
+        <input id="settingsUrlInput" type="text" class="mt-1 block w-full rounded border border-gray-600 bg-gray-900 text-white p-2" />
+      </label>
+      <div class="flex justify-end space-x-3 mt-4">
+        <button id="cancelSettingsBtn" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded">Cancel</button>
+        <button id="saveSettingsBtn" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded text-white">Save</button>
+      </div>
     </div>
   </div>
 

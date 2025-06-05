@@ -55,6 +55,7 @@ function createTile(id) {
     <div class="tile-header p-4 font-semibold text-lg border-b border-gray-700 flex justify-between items-center text-white cursor-move select-none">
       <span>${allTiles[id].name}</span>
       <div class="flex space-x-2">
+        <div class="flex space-x-2">
         <button
           onclick="openSettings('${id}')"
           class="bg-gray-600 hover:bg-gray-500 text-white w-7 h-7 text-sm rounded-full flex items-center justify-center"
@@ -62,11 +63,18 @@ function createTile(id) {
           type="button"
         >⚙️</button>
         <button
+          onclick="fullscreenTile('${id}')"
+          class="bg-yellow-600 hover:bg-yellow-500 text-white w-7 h-7 text-sm rounded-full flex items-center justify-center"
+          title="Fullscreen"
+          type="button"
+        >⛶</button>
+        <button
           onclick="removeTile('${id}')"
           class="bg-red-600 hover:bg-red-700 text-white w-7 h-7 text-sm rounded-full flex items-center justify-center"
           title="Close"
           type="button"
         >×</button>
+      </div>
       </div>
     </div>
     <div class="m-4 p-1 bg-gray-900 border border-gray-700 rounded-xl overflow-hidden">
@@ -297,6 +305,19 @@ function setupSettingsModal() {
     modal.classList.add("hidden");
     currentSettingsTileId = null;
   };
+}
+
+function fullscreenTile(id) {
+  const tile = document.getElementById(id);
+  if (!tile) return;
+  const iframe = tile.querySelector("iframe");
+  if (iframe && iframe.requestFullscreen) {
+    iframe.requestFullscreen();
+  } else if (iframe && iframe.webkitRequestFullscreen) {
+    iframe.webkitRequestFullscreen(); // Safari
+  } else if (iframe && iframe.msRequestFullscreen) {
+    iframe.msRequestFullscreen(); // IE11
+  }
 }
 
 function openSettings(id) {

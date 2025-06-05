@@ -110,10 +110,10 @@ function removeTile(id) {
   tile.style.opacity = "0";
   setTimeout(() => {
     tile.remove();
-    delete allTiles[id];
     saveLayout();
   }, 300);
 }
+
 
 // Tile Picker UI
 function setupAddTileMenu() {

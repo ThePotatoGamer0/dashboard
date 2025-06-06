@@ -24,6 +24,7 @@ window.addEventListener("DOMContentLoaded", () => {
   setRandomLogoSrc();
 });
 
+
 // 🧩 Load custom tiles from localStorage
 function loadCustomTiles() {
   const savedCustom = JSON.parse(localStorage.getItem("customTiles")) || {};
@@ -46,6 +47,8 @@ function initSortable() {
     onEnd: saveLayout,
   });
 }
+
+
 
 function onYouTubeIframeAPIReady() {
   // This function is required for YouTube embeds to work properly
@@ -70,6 +73,26 @@ function setRandomLogoSrc() {
   // Set the src attribute
   logoImage.src = randomPath;
 }
+
+const logo = document.getElementById("logo");
+        logo.onclick = () => {
+            // Add the custom animation class
+            logo.classList.add("spin-fade");
+
+            const totalAnimationDuration = 1000; // Matches the 1s in CSS
+            const midpoint = totalAnimationDuration / 2; // 500ms
+
+            // Change the image source exactly at the midpoint of the animation
+            setTimeout(() => {
+                setRandomLogoSrc();
+            }, midpoint);
+
+            // Remove the animation class once the entire animation sequence completes
+            // This resets the element for future clicks.
+            setTimeout(() => {
+                logo.classList.remove("spin-fade");
+            }, totalAnimationDuration);
+        };
 
 function createTile(id) {
   const tile = document.createElement("div");

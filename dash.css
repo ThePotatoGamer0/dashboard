@@ -10,3 +10,28 @@
   position: relative;
 }
 
+@keyframes spin-and-fade {
+            0% {
+                transform: rotate(0deg);
+                opacity: 1;
+            }
+            49.9% { /* Just before the midpoint, ensure opacity is 0 */
+                opacity: 0;
+            }
+            50% {
+                transform: rotate(180deg); /* Upside down */
+                opacity: 0; /* Fully faded out */
+                scale: 0.75;
+            }
+            50.1% { /* Immediately after the midpoint, new image is present, still transparent */
+                opacity: 0;
+            }
+            100% {
+                transform: rotate(360deg); /* Right-side up (full rotation) */
+                opacity: 1; /* Fully faded in */
+            }
+        }
+
+.spin-fade { /* A unique class name for our custom animation */
+  animation: spin-and-fade 1s ease-in-out forwards; /* 1s duration, linear timing, stays at its end state */
+}

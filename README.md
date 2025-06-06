@@ -1,6 +1,5 @@
-# dashboard
+# dashboard [![GitHub Pages Status](https://img.shields.io/uptimerobot/status/m800684925-5f8890204b8770f78f64b6ad.svg)](https://potatogamer.uk/dashboard)
 An experimental dynamic Dashboard for my web projects
-[![GitHub Pages Status](https://img.shields.io/uptimerobot/status/m800684925-5f8890204b8770f78f64b6ad.svg)](https://potatogamer.uk/dashboard)
 
 
 # Other Pages

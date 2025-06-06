@@ -60,8 +60,8 @@ function setRandomLogoSrc() {
 
   // List of possible image paths
   const imagePaths = [
-    './logo.png',
-    './logopride.png'
+    'logo.png',
+    'logopride.png'
   ];
 
   // Generate a random index
@@ -69,7 +69,7 @@ function setRandomLogoSrc() {
 
   // Get the random path
   const randomPath = imagePaths[randomIndex];
-
+  console.log(`logo is ${randomPath}`); // Debug log
   // Set the src attribute
   logoImage.src = randomPath;
 }
@@ -125,7 +125,7 @@ function createTile(id) {
       </div>
     </div>
     <div class="m-4 p-1 bg-gray-900 border border-gray-700 rounded-xl overflow-hidden">
-      <iframe src="${allTiles[id].src}" allow="fullscreen;" class="w-full h-60 border-none rounded-xl"></iframe>
+      <iframe src="${allTiles[id].src}" allow="fullscreen;"  scrolling="no" class="w-full h-60 border-none rounded-xl"></iframe>
     </div>
   `;
 

@@ -1,5 +1,6 @@
-# dashboard
+# dashboard [![GitHub Pages Status](https://img.shields.io/uptimerobot/status/m800684925-5f8890204b8770f78f64b6ad.svg)](https://stats.uptimerobot.com/C5sTosMnUd)
 An experimental dynamic Dashboard for my web projects
+
 
 # Other Pages
 Github Pages\

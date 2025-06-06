@@ -62,6 +62,11 @@ function setRandomLogoSrc() {
   const imagePaths = [
     'logo.png',
     'logopride.png'
+    'logopanpride.png',
+    'logopornpride.png',
+    'logotranspride.png',
+    'logobipride.png',
+    'logosexworkerspride.png',
   ];
 
   // Generate a random index
@@ -79,8 +84,8 @@ const logo = document.getElementById("logo");
             // Add the custom animation class
             logo.classList.add("spin-fade");
 
-            const totalAnimationDuration = 1000; // Matches the 1s in CSS
-            const midpoint = totalAnimationDuration / 2; // 500ms
+            const totalAnimationDuration = 500; // Matches the 0.5s in CSS
+            const midpoint = totalAnimationDuration / 2; // 250ms
 
             // Change the image source exactly at the midpoint of the animation
             setTimeout(() => {

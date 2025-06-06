@@ -33,5 +33,5 @@
         }
 
 .spin-fade { /* A unique class name for our custom animation */
-  animation: spin-and-fade 1s ease-in-out forwards; /* 1s duration, linear timing, stays at its end state */
+  animation: spin-and-fade 0.5s ease-in-out forwards; /* 1s duration, linear timing, stays at its end state */
 }

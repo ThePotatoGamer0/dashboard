@@ -20,6 +20,8 @@ window.addEventListener("DOMContentLoaded", () => {
   setupAddTileMenu();
   setupSettingsModal();
   setupAddCustomTileModal();
+  setupDeleteConfirmModal();
+  setRandomLogoSrc();
 });
 
 // 🧩 Load custom tiles from localStorage
@@ -45,6 +47,30 @@ function initSortable() {
   });
 }
 
+function onYouTubeIframeAPIReady() {
+  // This function is required for YouTube embeds to work properly
+  // It can be left empty if not using YouTube tiles
+}
+
+function setRandomLogoSrc() {
+  const logoImage = document.getElementById('logo');
+
+  // List of possible image paths
+  const imagePaths = [
+    './logo.png',
+    './logopride.png'
+  ];
+
+  // Generate a random index
+  const randomIndex = Math.floor(Math.random() * imagePaths.length);
+
+  // Get the random path
+  const randomPath = imagePaths[randomIndex];
+
+  // Set the src attribute
+  logoImage.src = randomPath;
+}
+
 function createTile(id) {
   const tile = document.createElement("div");
   tile.className =
@@ -55,7 +81,6 @@ function createTile(id) {
     <div class="tile-header p-4 font-semibold text-lg border-b border-gray-700 flex justify-between items-center text-white cursor-move select-none">
       <span>${allTiles[id].name}</span>
       <div class="flex space-x-2">
-        <div class="flex space-x-2">
         <button
           onclick="openSettings('${id}')"
           class="bg-gray-600 hover:bg-gray-500 text-white w-7 h-7 text-sm rounded-full flex items-center justify-center"
@@ -75,14 +100,15 @@ function createTile(id) {
           type="button"
         >×</button>
       </div>
-      </div>
     </div>
     <div class="m-4 p-1 bg-gray-900 border border-gray-700 rounded-xl overflow-hidden">
       <iframe src="${allTiles[id].src}" allow="fullscreen;" class="w-full h-60 border-none rounded-xl"></iframe>
     </div>
   `;
+
   return tile;
 }
+
 
 function saveLayout() {
   const ids = [...dashboard.children].map((tile) => tile.id);
@@ -136,83 +162,122 @@ function removeTile(id) {
   }, 300);
 }
 
+function buildTileList() {
+  const tileList = document.getElementById("tileList");
+  tileList.innerHTML = "";
+  const current = new Set([...dashboard.children].map(t => t.id));
+
+  for (const id in allTiles) {
+    if (!current.has(id)) {
+      const container = document.createElement("div");
+      container.className = "flex items-center justify-between space-x-2";
+
+      const btn = document.createElement("button");
+      btn.className = "flex-1 bg-gray-700 hover:bg-gray-600 p-2 rounded text-left";
+      btn.textContent = allTiles[id].name;
+      btn.onclick = () => {
+        const newTile = createTile(id);
+        newTile.style.opacity = "0";
+        newTile.style.scale = "0.95";
+        newTile.style.pointerEvents = "none";
+        newTile.style.transition = "scale 0.3s, opacity 0.3s";
+        dashboard.appendChild(newTile);
+        requestAnimationFrame(() => {
+          newTile.style.opacity = "1";
+          newTile.style.scale = "1";
+          newTile.style.pointerEvents = "auto";
+        });
+        saveLayout();
+        document.getElementById("tilePicker").classList.add("hidden");
+      };
+
+      container.appendChild(btn);
+
+      if (id.startsWith("custom_")) {
+        const delBtn = document.createElement("button");
+        delBtn.className = "bg-red-600 hover:bg-red-700 text-white w-7 h-7 text-sm rounded-full flex items-center justify-center";
+        delBtn.title = "Delete Custom Tile";
+        delBtn.type = "button";
+        delBtn.textContent = "×";
+        delBtn.onclick = (e) => {
+          e.stopPropagation();
+          showDeleteConfirmModal(id, allTiles[id].name);
+        };
+        container.appendChild(delBtn);
+      }
+
+      tileList.appendChild(container);
+    }
+  }
+
+  // Add the "Add Custom Tile" button
+  const customBtn = document.createElement("button");
+  customBtn.className = "w-full bg-blue-700 hover:bg-blue-600 p-2 rounded text-left font-semibold mt-4";
+  customBtn.textContent = "➕ Add Custom Tile";
+  customBtn.onclick = () => {
+    document.getElementById("tilePicker").classList.add("hidden");
+    openAddCustomTileModal();
+  };
+  tileList.appendChild(customBtn);
+}
+
 function setupAddTileMenu() {
   const addBtn = document.getElementById("addTileBtn");
   const picker = document.getElementById("tilePicker");
   const closePicker = document.getElementById("closePicker");
-  const tileList = document.getElementById("tileList");
 
   addBtn.onclick = () => {
-    tileList.innerHTML = "";
-    const current = new Set([...dashboard.children].map(t => t.id));
-
-    for (const id in allTiles) {
-      if (!current.has(id)) {
-        const container = document.createElement("div");
-        container.className = "flex items-center justify-between space-x-2";
-
-        const btn = document.createElement("button");
-        btn.className = "flex-1 bg-gray-700 hover:bg-gray-600 p-2 rounded text-left";
-        btn.textContent = allTiles[id].name;
-        btn.onclick = () => {
-          const newTile = createTile(id);
-          newTile.style.opacity = "0";
-          newTile.style.scale = "0.95";
-          newTile.style.pointerEvents = "none";
-          newTile.style.transition = "scale 0.3s, opacity 0.3s";
-          dashboard.appendChild(newTile);
-          requestAnimationFrame(() => {
-            newTile.style.opacity = "1";
-            newTile.style.scale = "1";
-            newTile.style.pointerEvents = "auto";
-          });
-          saveLayout();
-          picker.classList.add("hidden");
-        };
-
-        container.appendChild(btn);
-
-        // Add delete button for custom tiles
-        if (id.startsWith("custom_")) {
-          const delBtn = document.createElement("button");
-          delBtn.className = "bg-red-600 hover:bg-red-700 text-white w-7 h-7 text-sm rounded-full flex items-center justify-center";
-          delBtn.title = "Delete Custom Tile";
-          delBtn.type = "button";
-          delBtn.textContent = "×";
-          delBtn.onclick = (e) => {
-            e.stopPropagation();
-            if (confirm(`Delete custom tile "${allTiles[id].name}" permanently?`)) {
-              delete allTiles[id];
-              saveCustomTiles();
-              const tileElem = document.getElementById(id);
-              if (tileElem) tileElem.remove();
-              saveLayout();
-              setupAddTileMenu(); // Re-render the modal
-            }
-          };
-          container.appendChild(delBtn);
-        }
-
-        tileList.appendChild(container);
-      }
-    }
-
-    // ➕ Custom Tile button - now opens modal
-    const customBtn = document.createElement("button");
-    customBtn.className =
-      "w-full bg-blue-700 hover:bg-blue-600 p-2 rounded text-left font-semibold mt-4";
-    customBtn.textContent = "➕ Add Custom Tile";
-    customBtn.onclick = () => {
-      picker.classList.add("hidden");
-      openAddCustomTileModal();
-    };
-    tileList.appendChild(customBtn);
-
+    buildTileList();
     picker.classList.remove("hidden");
   };
 
   closePicker.onclick = () => picker.classList.add("hidden");
 }
+
+let pendingDeleteTileId = null;
+
+function setupDeleteConfirmModal() {
+  const modal = document.getElementById("confirmDeleteModal");
+  const cancelBtn = document.getElementById("cancelDeleteBtn");
+  const confirmBtn = document.getElementById("confirmDeleteBtn");
+
+  cancelBtn.onclick = () => {
+    modal.classList.add("hidden");
+    pendingDeleteTileId = null;
+  };
+
+  confirmBtn.onclick = () => {
+  if (!pendingDeleteTileId) return console.error(`Tile ${pendingDeleteTileId} does not exist`);
+
+    document.getElementById("tilePicker").classList.add("hidden");
+
+    delete allTiles[pendingDeleteTileId];
+    saveCustomTiles();
+
+    const tileElem = document.getElementById(pendingDeleteTileId);
+    if (tileElem) tileElem.remove();
+
+    saveLayout();
+    pendingDeleteTileId = null;
+
+    modal.classList.add("hidden");
+
+    buildTileList(); // refresh immediately, no need to click Add button
+    document.getElementById("tilePicker").classList.remove("hidden");
+  };
+
+
+}
+
+function showDeleteConfirmModal(tileId, tileName) {
+  const modal = document.getElementById("confirmDeleteModal");
+  const message = document.getElementById("deleteConfirmMessage");
+
+  pendingDeleteTileId = tileId;
+  message.textContent = `Are you sure you want to permanently delete ${tileName}?`;
+  modal.classList.remove("hidden");
+}
+
 
 
 // --- New Add Custom Tile Modal Logic ---

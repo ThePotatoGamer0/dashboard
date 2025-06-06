@@ -61,7 +61,7 @@ function setRandomLogoSrc() {
   // List of possible image paths
   const imagePaths = [
     'logo.png',
-    'logopride.png'
+    'logopride.png',
     'logopanpride.png',
     'logopornpride.png',
     'logotranspride.png',

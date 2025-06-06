@@ -4,12 +4,16 @@ let currentSettingsTileId = null;
 // Load default + custom tiles
 let allTiles = {
   tileexample1: {
-    name: "Tile Example 1",
+    name: "Tile Example",
     src: "tiles/tileexample1/index.html"
   },
-  tileexample2: {
-    name: "Tile Example 2",
-    src: "tiles/tileexample2/index.html"
+  MP3_Player: {
+    name: "MP3 Player",
+    src: "tiles/MP3_Player/index.html"
+  },
+  Notes: {
+    name: "Notes",
+    src: "tiles/Notes/index.html"
   },
 };
 

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Notes Tile</title>
+  <link rel="stylesheet" href="tile.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-zinc-900 text-white w-screen h-screen m-0 p-0 flex items-center justify-center">
+  <div class="bg-zinc-800 p-4 rounded-xl shadow-md w-full max-w-xl h-[90%] flex flex-col space-y-3 relative">
+    <div class="flex items-center justify-between">
+      <div class="text-lg font-medium">📝 Notes</div>
+      <button id="clearNotesBtn" class="text-sm text-red-400 hover:text-red-300">Clear</button>
+    </div>
+    <textarea
+      id="notesArea"
+      class="flex-grow bg-zinc-900 text-white p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+      placeholder="Write your notes here..."></textarea>
+
+    <!-- Modal backdrop -->
+    <div id="modalBackdrop" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
+      <div class="bg-zinc-800 rounded-lg p-6 max-w-sm w-full text-center space-y-4">
+        <div class="text-white text-lg font-semibold">Clear all notes?</div>
+        <div class="text-zinc-300">This action cannot be undone.</div>
+        <div class="flex justify-center gap-4">
+          <button id="modalCancelBtn" class="px-4 py-2 rounded bg-zinc-700 hover:bg-zinc-600 text-white">Cancel</button>
+          <button id="modalConfirmBtn" class="px-4 py-2 rounded bg-red-600 hover:bg-red-500 text-white">Clear</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="tile.js"></script>
+</body>
+</html>

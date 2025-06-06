@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MP3 Player</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="tile.css">
+</head>
+<body class="bg-zinc-900 text-white flex items-center justify-center h-full">
+  <div class="text-center space-y-3 w-full px-4 relative">
+    <div class="text-white text-lg font-medium flex items-center justify-center gap-2">
+      🎵 MP3 Player
+      <button id="infoBtn" class="text-blue-400 hover:text-blue-500 text-xl" title="Supported Formats">ℹ️</button>
+    </div>
+
+    <input type="file" accept="audio/*" id="fileInput"
+      class="block mx-auto text-sm text-white
+             file:mr-4 file:py-1 file:px-3
+             file:rounded-full file:border-0
+             file:text-sm file:font-semibold
+             file:bg-blue-600 file:text-white
+             hover:file:bg-blue-700
+             bg-zinc-700 rounded px-2 py-1 w-full max-w-xs"
+    >
+
+    <audio id="audioPlayer" controls class="w-full max-w-xs mx-auto mt-1"></audio>
+
+    <div id="eq" class="flex justify-center items-end gap-1 w-full max-w-xs h-6 mt-2 mx-auto paused">
+      <div class="bar flex-1"></div>
+      <div class="bar flex-1"></div>
+      <div class="bar flex-1"></div>
+      <div class="bar flex-1"></div>
+      <div class="bar flex-1"></div>
+      <div class="bar flex-1"></div>
+      <div class="bar flex-1"></div>
+      <div class="bar flex-1"></div>
+      <div class="bar flex-1"></div>
+      <div class="bar flex-1"></div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div id="infoModal" class="fixed inset-0 flex items-center justify-center z-50 hidden">
+    <div class="bg-zinc-800 text-white rounded-lg shadow-lg max-w-sm w-full p-6 relative">
+      <button id="closeModal" class="absolute top-2 right-3 text-white text-2xl leading-none hover:text-red-400">&times;</button>
+      <h2 class="text-lg font-semibold mb-2">Supported Audio Formats</h2>
+      <ul class="list-disc list-inside text-sm space-y-1">
+        <li>MP3 (.mp3)</li>
+        <li>WAV (.wav)</li>
+        <li>OGG (.ogg)</li>
+        <li>M4A / AAC (.m4a, .aac)</li>
+        <li>WebM Audio (.webm)</li>
+        <li>FLAC (.flac)</li>
+      </ul>
+      <p class="text-xs text-gray-400 mt-4">Browser support may vary.</p>
+    </div>
+  </div>
+
+  <script src="tile.js"></script>
+</body>
+</html>
